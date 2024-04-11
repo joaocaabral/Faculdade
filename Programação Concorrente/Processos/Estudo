@@ -1,0 +1,170 @@
+/* fork1
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(int argc, char **argv) {
+
+    fork(); // Aqui é criado o processo filho
+    
+    printf("Processo %d executando!\n", getpid()); // getpid() -> vai pegar o pid do processo filho
+    fflush(stdout);
+
+    while(wait(NULL) >= 0); // Vai fz com que o sistema aguarde o final do processo filho
+    
+    return 0;
+}
+*/
+
+
+
+/* fork2 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(int argc, char **argv) {
+
+    if(argc != 2) {
+        printf("Sintaxe: %s <numero de filhos>\n", argv[0]);
+        return 1;
+    }
+
+    int nforks = atoi(argv[1]);
+
+    // Cria nforks processos filhos a partir do processo inicial (processo pai).
+
+    for (int i = 0; i < nforks; i++) {
+        if(fork() == 0) { // Aqui vai criar o processo filho
+
+            printf("Processo %d criado!\n", getpid());  // Aqui é o pid do processo filho
+            fflush(stdout);
+
+            // Garante que o filho criado não executa as próximas iterações do for. 
+
+            break;
+        }
+    }
+
+    while(wait(NULL) >= 0);
+
+    return 0;
+}
+*/
+
+
+
+/*  Exercício 1
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <stdio.h>
+#include <stdbool.h>
+
+
+//       (pai)      
+//         |        
+//    +----+----+
+//    |         |   
+// filho_1   filho_2
+
+
+// ~~~ printfs  ~~~
+// pai (ao criar filho): "Processo pai criou %d\n"
+//    pai (ao terminar): "Processo pai finalizado!\n"
+//  filhos (ao iniciar): "Processo filho %d criado\n"
+
+// Obs:
+// - pai deve esperar pelos filhos antes de terminar!
+
+int main(int argc, char** argv)
+{   
+    int pid;
+    int pid2;
+
+    pid = fork();   / Aqui o pai cria o primeiro filho
+
+    if(pid == 0){   
+        printf("Processo pai criou %d \n", getpid());
+        printf("Processo filho %d criado \n", getpid());
+        fflush(stdout);
+
+    } else {
+        pid2 = fork();  //Aqui o segundo filho é criado, o filho é criado apenas pelo pai por conta dessa sequencia de if else
+        if(pid2 == 0){ 
+            printf("Processo pai criou %d \n", getpid());
+            printf("Processo filho %d criado \n", getpid());
+            fflush(stdout);
+
+        } else {
+            while(wait(NULL) >= 0); // Aqui é oq faz o pai esperar os filhos para terminar
+            printf("Processo pai finalizado! \n");
+        }
+    }
+    return 0;
+}
+*/
+
+
+
+/*  Exercício 2
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <stdio.h>
+
+//                          (principal)
+//                               |
+//              +----------------+--------------+
+//              |                               |
+//           filho_1                         filho_2
+//              |                               |
+//    +---------+-----------+          +--------+--------+
+//    |         |           |          |        |        |
+// neto_1_1  neto_1_2  neto_1_3     neto_2_1 neto_2_2 neto_2_3
+
+// ~~~ printfs  ~~~
+//      principal (ao finalizar): "Processo principal %d finalizado\n"
+// filhos e netos (ao finalizar): "Processo %d finalizado\n"
+//    filhos e netos (ao inciar): "Processo %d, filho de %d\n"
+
+// Obs:
+// - netos devem esperar 5 segundos antes de imprmir a mensagem de finalizado (e terminar)
+// - pais devem esperar pelos seu descendentes diretos antes de terminar
+
+int main(int argc, char** argv)
+{ 
+    for (int i = 0; i < 2; i++){
+        pid_t pid = fork();
+
+        if (pid){
+            wait(NULL);
+
+        } else {
+            printf("Processo %d, filho de %d \n", getpid(), getppid());
+            for (int j = 0; j < 3; j++)
+            {
+             pid_t pid_filho = fork();
+             if (pid_filho){
+                wait(NULL);
+             } else {
+                printf("Processo %d, filho de %d \n", getpid(), getppid());
+                sleep(5);
+                printf("Processo %d finalizado \n", getpid());
+                exit(0);
+             }
+
+            }
+            printf("Processo %d finalizado \n", getpid());
+            exit(0);
+        }
+
+    }
+    printf("Processo principal %d finalizado \n", getpid());
+    return 0;
+}
+*/

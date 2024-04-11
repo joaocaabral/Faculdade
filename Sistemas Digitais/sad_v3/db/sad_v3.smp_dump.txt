@@ -1,0 +1,9 @@
+
+State Machine - |sad|sad_controle:sad_control|estadoatual
+Name estadoatual.s5 estadoatual.s4 estadoatual.s3 estadoatual.s2 estadoatual.s1 estadoatual.s0 
+estadoatual.s0 0 0 0 0 0 0 
+estadoatual.s1 0 0 0 0 1 1 
+estadoatual.s2 0 0 0 1 0 1 
+estadoatual.s3 0 0 1 0 0 1 
+estadoatual.s4 0 1 0 0 0 1 
+estadoatual.s5 1 0 0 0 0 1 

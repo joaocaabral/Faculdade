@@ -1,0 +1,14 @@
+--------------- dados do aluno ---------------
+nome: Joao Victor Cabral, Pedro Alfeu Wolff Lemos
+matricula: 22204113, 22200373
+--------------- dados do fpga ----------------
+familia: Cyclone III
+dispositivo: EP3C5E144C7
+-------- dados de utilizacao da placa --------
+total combinational functions: 78 / 5,136 ( 2 % )
+dedicates logic registers: 59 / 5,136 ( 1 % )
+total pins: 40 / 95 ( 42 % )
+-------------- dados de atraso ---------------
+input port: fim[*]
+output port: clk
+atraso (ns): 7.412
