@@ -1,0 +1,69 @@
+*Operadores
+    *Aritméticos*
+    +, -, *, /, 'mod', 'div'
+    ** --expo com float
+    ^ --expo inteira positiva
+    ^^ --expo inteira
+
+    *Lógicos*
+    || --ou
+    && --e
+    not
+
+    *Relacionais*
+    ==, /=, >, >=, <=, <
+
+*Construtores
+    *Listas*
+    :
+    []
+    ..
+
+    *Lambda*
+    barra invertida, ->
+
+*Concatenação ++
+
+*Sublinhado _
+    Identificadores iniciados por _ não são verificados por
+    compiladores, portanto não podem ser acessados
+
+    Ex: select_segundo (_x, y, _) = y
+
+*Entrada e saída de dados
+    Prelude> :t getLine
+    getLine :: IO String --Le da IO uma String
+
+    Prelude> :t getChar
+    getChar :: IO char --Le da IO um Char
+
+    Prelude> :t putStrLn
+    putStrLn :: String -> IO () --Recebe uma String e printa
+
+    Prelude> :t print
+    print :: Show a => a -> IO () --Aplica show e printa
+        -- A função print transforma para string
+
+    Ex:
+        main = do
+            putStrLn "Informe sua idade: "
+            idade <- getLine
+            putStrLn ("Sua idade é " ++ idade)
+
+*Vincular valores
+    <-  --para ações de IO (in and out)
+    let --para qualquer outra expressão (constantes e etc)
+
+*Leitura de caracter
+    main = do
+        opX  <- getChar
+        -    <- getLine -- Vai pular a proxima linha
+        strY <- getLine
+
+*"Switch Case"
+    funcao :: Int -> Int
+    funcao x | (x == 0) = 0
+             | (x == 1) = 1
+             | otherwise = 10
+
+    main = print (funcao 2) --vai printar 10
